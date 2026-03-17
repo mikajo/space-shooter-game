@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Retro Space Shooter</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    canvas { display: block; image-rendering: pixelated; }
+  </style>
+</head>
+<body>
+  <!--
+    IMPORTANT: Due to browser security, assets cannot be loaded via file://
+    Run a local server before opening this file. Options:
+      Python:  python -m http.server 8000
+      Node:    npx serve .
+      VS Code: use the "Live Server" extension
+    Then open http://localhost:8000
+  -->
+  <!-- Error overlay: shows any uncaught JS exception as a red banner -->
+  <div id="err" style="display:none;position:fixed;top:0;left:0;width:100%;background:#c00;color:#fff;padding:8px 12px;font:13px monospace;z-index:9999;white-space:pre-wrap;"></div>
+  <script>
+    window.onerror = function(msg, src, line, col, err) {
+      var el = document.getElementById('err');
+      var detail = (err && err.stack) ? err.stack : (msg + '\n' + src + ':' + line);
+      el.textContent = 'JS ERROR: ' + detail;
+      el.style.display = 'block';
+    };
+    window.addEventListener('unhandledrejection', function(e) {
+      var el = document.getElementById('err');
+      el.textContent = 'UNHANDLED REJECTION: ' + (e.reason && e.reason.stack ? e.reason.stack : e.reason);
+      el.style.display = 'block';
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
